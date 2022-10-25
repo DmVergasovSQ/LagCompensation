@@ -47,6 +47,7 @@ void ALagCompensationManager::RegisterCharacter(ALagCompensationCharacter* Chara
 {
 	auto& val = CharacterData.Add(Character);
 	val.Init({Character->GetActorLocation(), Character->GetActorRotation()}, TimeStamps.Num());
+	Character->OnEndPlay.AddUniqueDynamic(this, &ALagCompensationManager::OnCharacterEndPlay);
 }
 
 void ALagCompensationManager::BeginPlay()
@@ -105,6 +106,11 @@ void ALagCompensationManager::ResetState()
 	}
 
 	CachedCharacters.Empty();
+}
+
+void ALagCompensationManager::OnCharacterEndPlay(AActor* Actor, EEndPlayReason::Type EndPlayReason)
+{
+	CharacterData.Remove(Cast<ALagCompensationCharacter>(Actor));
 }
 
 void ALagCompensationManager::DrawCompensation_Implementation(const TArray<FCachedLagCompensationData>& Data)

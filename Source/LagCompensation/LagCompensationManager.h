@@ -45,4 +45,8 @@ public:
 	TMap<TWeakObjectPtr<ALagCompensationCharacter>, TArray<FCachedLagCompensationData>> CharacterData;
 
 	TMap<TWeakObjectPtr<ALagCompensationCharacter>, FCachedLagCompensationData> CachedCharacters;
+
+protected:
+	UFUNCTION()
+	void OnCharacterEndPlay(AActor* Actor, EEndPlayReason::Type EndPlayReason);
 };
